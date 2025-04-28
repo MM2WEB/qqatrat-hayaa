@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث عن متبرع - قطرة حياة</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="ChatGPT Image 25 أبريل 2025، 10_18_20 م.png">
+    <!-- لا حاجة لـ <style> هنا، تم نقلها لـ style.css -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><i class="fa-solid fa-droplet"></i> قطرة حياة</a>
+            </div>
+            <nav class="main-nav">
+                 <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="register.html">تسجيل متبرع</a></li>
+                    <li><a href="search.html" class="active">البحث عن متبرع</a></li>
+                    <li><a href="advice.html">نصائح طبية</a></li>
+                    <li><a href="about.html">عن المبادرة</a></li>
+                    <li><a href="suggestions.html">اتصل بنا</a></li>
+                 </ul>
+            </nav>
+             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+             <div class="form-section">
+                 <h2 class="text-center mb-3">البحث عن متبرع بالدم</h2>
+                 <p class="text-center mb-5" style="color: var(--text-light);">استخدم الفلاتر للعثور على المتبرعين المناسبين في منطقتك.</p>
+
+                <form id="search-form">
+                     <div class="form-group">
+                         <label for="search_governorate"><i class="fa-solid fa-map-marker-alt"></i> المحافظة:</label>
+                         <select id="search_governorate" name="governorate" class="form-control" required>
+                             <option value="" disabled selected>-- اختر المحافظة --</option>
+                             <option value="صنعاء">أمانة العاصمة / صنعاء</option>
+                             <option value="عدن">عدن</option>
+                             <option value="تعز">تعز</option>
+                             <option value="الحديدة">الحديدة</option>
+                             <option value="إب">إب</option>
+                             <option value="ذمار">ذمار</option>
+                             <option value="حضرموت">حضرموت</option>
+                             <option value="لحج">لحج</option>
+                             <option value="أبين">أبين</option>
+                             <option value="الضالع">الضالع</option>
+                             <option value="عمران">عمران</option>
+                             <option value="المحويت">المحويت</option>
+                             <option value="حجة">حجة</option>
+                             <option value="صعدة">صعدة</option>
+                             <option value="شبوة">شبوة</option>
+                             <option value="المهرة">المهرة</option>
+                             <option value="مأرب">مأرب</option>
+                             <option value="الجوف">الجوف</option>
+                             <option value="ريمة">ريمة</option>
+                             <option value="البيضاء">البيضاء</option>
+                             <option value="سقطرى">أرخبيل سقطرى</option>
+                         </select>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="search_city"><i class="fa-solid fa-map-pin"></i> المدينة/المنطقة (اختياري):</label>
+                         <input type="text" id="search_city" name="city" class="form-control" placeholder="اكتب جزءاً من اسم المدينة أو الحي...">
+                     </div>
+
+                     <div class="form-group">
+                         <label for="search_bloodtype"><i class="fa-solid fa-tint"></i> فصيلة الدم المطلوبة:</label>
+                         <select id="search_bloodtype" name="bloodtype" class="form-control" required>
+                             <option value="" disabled selected>-- اختر الفصيلة --</option>
+                             <option value="O+">O+</option>
+                             <option value="O-">O-</option>
+                             <option value="A+">A+</option>
+                             <option value="A-">A-</option>
+                             <option value="B+">B+</option>
+                             <option value="B-">B-</option>
+                             <option value="AB+">AB+</option>
+                             <option value="AB-">AB-</option>
+                         </select>
+                     </div>
+
+                      <div class="form-group">
+                         <label for="filter_availability"><i class="fa-solid fa-calendar-check"></i> حالة الجاهزية:</label>
+                         <select id="filter_availability" name="availability" class="form-control">
+                             <option value="">الكل</option>
+                             <option value="ready">جاهزون للتبرع فقط</option>
+                             <!-- <option value="not_ready">غير جاهزين حالياً فقط</option> -->
+                         </select>
+                         <small>سيتم عرض المتبرعين الذين أبدوا استعدادهم ومر على آخر تبرع لهم 90 يومًا أو أكثر.</small>
+                     </div>
+
+                      <div class="form-group">
+                          <label for="sort_by"><i class="fa-solid fa-sort"></i> ترتيب النتائج حسب:</label>
+                          <select id="sort_by" name="sort" class="form-control">
+                              <option value="last_donation_asc_nullsfirst">الأقدم تبرعًا (أو لم يتبرع)</option>
+                              <option value="created_at_desc">الأحدث تسجيلاً</option>
+                              <option value="full_name_asc">الاسم (أبجدي)</option>
+                          </select>
+                      </div>
+
+                     <div class="text-center mt-4">
+                         <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-search"></i> بــحــــث</button>
+                         <button type="reset" id="reset-filters" class="btn btn-outline-primary btn-lg" style="margin-right: 10px;"><i class="fa-solid fa-eraser"></i> مسح الفلاتر</button>
+                     </div>
+                 </form>
+             </div>
+
+            <div id="search-results" class="mt-5">
+                <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-list-check"></i> نتائج البحث: <span id="results-count" style="font-size: 0.8em; color: var(--text-light); font-weight: normal;"></span></h3>
+                <div id="loading-indicator" style="display: none;">
+                     <i class="fa-solid fa-spinner fa-spin fa-2x text-primary"></i>
+                    <p>جاري البحث...</p>
+                </div>
+                <div id="results-list">
+                    <div class="no-results" id="initial-message">
+                        <i class="fa-solid fa-box-open"></i>
+                        <p>الرجاء تحديد المحافظة والفصيلة على الأقل والضغط على زر البحث لعرض النتائج.</p>
+                    </div>
+                </div>
+                <!-- Pagination Controls -->
+                <div id="pagination-controls" style="text-align: center; margin-top: 20px;"></div>
+
+                 <!-- Notices -->
+                <div class="privacy-notice mt-4">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <strong>ملاحظة هامة حول الخصوصية:</strong>
+                    <p>يتم عرض أرقام هواتف المتبرعين حالياً لتسهيل الوصول إليهم بسرعة. نرجو استخدامها لطلب التبرع بالدم فقط وعدم إزعاج المتبرعين. نعمل على تطوير آلية تواصل أكثر أماناً.</p>
+                </div>
+                 <div class="warning-notice mt-3">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <strong>تحذير أمني:</strong> عرض الأرقام مباشرة يعرض المتبرعين لخطر الاستخدام غير المصرح به. ننصح بشدة بتطبيق سياسات الأمان (RLS) في Supabase.
+                 </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+             <p>موقع قطرة حياة الخيري © <span id="year"></span> - مبادرة تطوعية لإنقاذ الأرواح.</p>
+            <p class="footer-credits">فكرة وتصميم: المبرمج معتصم عبدالله محمود الجيلاني | الدكتور محمد عبدوه الجيلاني.</p>
+            <p class="footer-supervision"><i class="fa-solid fa-university"></i> تحت إشراف: المعهد الوطني للعلوم والتكنولوجيا</p>
+             <p><a href="privacy.html">سياسة الخصوصية وشروط الاستخدام</a></p>
+        </div>
+    </footer>
+
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Custom JS Code for Search (UPDATED) -->
+    <script>
+        // =======================================
+        // Supabase Initialization
+        // =======================================
+        const SUPABASE_URL = 'https://zohlhmkwntwksjwmjaeh.supabase.co'; // تأكد من صحة الرابط
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvaGxobWt3bnR3a3Nqd21qYWVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUwODQzMjksImV4cCI6MjA2MDY2MDMyOX0.T_kUouU6pIaYIj1ChE7AQFREF11CxfSRlKeOvlld8i8';     // Supabase Initialization (!!! MUST BE FIRST !!!)
+
+        let supabaseClient;
+        try {
+            if (!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error("Supabase URL or Key missing");
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('Supabase Client Initialized for Search Page:', supabaseClient);
+        } catch (error) {
+             console.error("Error initializing Supabase:", error);
+             alert("خطأ فادح: لا يمكن الاتصال بقاعدة البيانات.");
+             document.getElementById('search-form')?.setAttribute('disabled', 'true');
+             document.getElementById('results-list').innerHTML = '<p class="alert alert-danger">تعذر تهيئة الاتصال.</p>';
+        }
+
+        // =======================================
+        // DOM Elements
+        // =======================================
+        const searchForm = document.getElementById('search-form');
+        const governorateSelect = document.getElementById('search_governorate');
+        const cityInput = document.getElementById('search_city');
+        const bloodTypeSelect = document.getElementById('search_bloodtype');
+        const availabilityFilter = document.getElementById('filter_availability');
+        const sortBySelect = document.getElementById('sort_by');
+        const resultsListDiv = document.getElementById('results-list');
+        const initialMessageDiv = document.getElementById('initial-message');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const resultsCountSpan = document.getElementById('results-count');
+        const paginationControlsDiv = document.getElementById('pagination-controls');
+        const resetButton = document.getElementById('reset-filters');
+
+        const ITEMS_PER_PAGE = 10; // Number of results per page
+
+        // =======================================
+        // Helper Functions
+        // =======================================
+         function calculateAvailability(donor) {
+             const MIN_DAYS_INTERVAL = 90; // Minimum days between donations
+             let canDonateByDate = true;
+             let lastDonationText = "لم يحدد";
+             let daysSinceLastDonation = null; // Use null for 'unknown'
+
+             if (donor.last_donation_date) {
+                 try {
+                     const lastDonation = new Date(donor.last_donation_date);
+                     const today = new Date();
+                     lastDonation.setHours(0, 0, 0, 0);
+                     today.setHours(0, 0, 0, 0);
+
+                     if (!isNaN(lastDonation.getTime())) {
+                         const diffTime = today - lastDonation;
+                         daysSinceLastDonation = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                         lastDonationText = lastDonation.toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' });
+                         if (daysSinceLastDonation < MIN_DAYS_INTERVAL) {
+                             canDonateByDate = false;
+                         }
+                     } else {
+                         lastDonationText = "تاريخ غير صالح";
+                         canDonateByDate = false;
+                     }
+                 } catch (dateError) {
+                     console.error("Error parsing last donation date:", donor.last_donation_date, dateError);
+                     lastDonationText = "خطأ في التاريخ";
+                     canDonateByDate = false;
+                 }
+             }
+             // Final check: Must be marked ready AND passed date interval
+             const isAvailable = donor.is_ready_to_donate && canDonateByDate;
+             return { isAvailable, lastDonationText, daysSinceLastDonation };
+         }
+
+        function renderDonorCard(donor) {
+             const { isAvailable, lastDonationText, daysSinceLastDonation } = calculateAvailability(donor);
+
+             const donorCard = document.createElement('div');
+             donorCard.className = 'donor-result-card';
+
+             // --- !! SECURITY WARNING: Displaying phone number !! ---
+             donorCard.innerHTML = `
+                 <div class="donor-info">
+                     <span><i class="fa-solid fa-user fa-fw"></i> <strong>${donor.full_name || 'غير متوفر'}</strong></span>
+                     <span><i class="fa-solid fa-phone fa-fw"></i> <strong class="phone-number">${donor.phone_number || 'غير متوفر'}</strong></span>
+                     <span><i class="fa-solid fa-tint fa-fw"></i> <strong class="blood-type-value">${donor.blood_type}</strong></span>
+                     ${donor.city ? `<span><i class="fa-solid fa-map-pin fa-fw"></i> ${donor.city}</span>` : ''}
+                     <span><i class="fa-solid fa-calendar-alt fa-fw"></i> آخر تبرع: ${lastDonationText} ${daysSinceLastDonation !== null ? `(قبل ${daysSinceLastDonation} يوم)` : ''}</span>
+                 </div>
+                 <div class="availability-status">
+                     ${isAvailable
+                         ? '<span class="ready"><i class="fa-solid fa-check-circle"></i> جاهز للتبرع</span>'
+                         : '<span class="not-ready"><i class="fa-solid fa-hourglass-half"></i> غير جاهز حالياً</span>'
+                     }
+                 </div>
+             `;
+             return { card: donorCard, isActuallyAvailable: isAvailable }; // Return availability status too
+         }
+
+         function setupPagination(currentPage, totalItems) {
+            paginationControlsDiv.innerHTML = ''; // Clear existing
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            if (totalPages <= 1) return; // No pagination needed
+
+            // Previous Button
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '« السابق';
+            prevButton.className = 'btn btn-sm btn-outline-primary';
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => performSearch(currentPage - 1); // Pass page number
+            paginationControlsDiv.appendChild(prevButton);
+
+            // Page Info
+             const pageInfo = document.createElement('span');
+             pageInfo.textContent = ` صفحة ${currentPage} من ${totalPages} `;
+             pageInfo.style.margin = "0 10px";
+             paginationControlsDiv.appendChild(pageInfo);
+
+
+            // Next Button
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = 'التالي »';
+            nextButton.className = 'btn btn-sm btn-outline-primary';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.onclick = () => performSearch(currentPage + 1); // Pass page number
+            paginationControlsDiv.appendChild(nextButton);
+        }
+
+        // =======================================
+        // Search Logic
+        // =======================================
+        async function performSearch(page = 1) {
+            if (!supabaseClient) return; // Guard clause
+
+            const selectedGovernorate = governorateSelect.value;
+            const selectedBloodType = bloodTypeSelect.value;
+            const searchCity = cityInput.value.trim();
+            const filterAvailability = availabilityFilter.value;
+            const sortBy = sortBySelect.value;
+            const submitButton = searchForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+
+
+            if (!selectedGovernorate || !selectedBloodType) {
+                resultsListDiv.innerHTML = '<p class="alert alert-warning">الرجاء اختيار المحافظة وفصيلة الدم المطلوبة على الأقل.</p>';
+                if (initialMessageDiv) initialMessageDiv.style.display = 'none';
+                if (resultsCountSpan) resultsCountSpan.textContent = '';
+                paginationControlsDiv.innerHTML = ''; // Clear pagination
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري البحث...';
+            resultsListDiv.innerHTML = ''; // Clear previous results
+            if (initialMessageDiv) initialMessageDiv.style.display = 'none';
+            loadingIndicator.style.display = 'block';
+            if (resultsCountSpan) resultsCountSpan.textContent = '';
+             paginationControlsDiv.innerHTML = ''; // Clear pagination during search
+
+            try {
+                const offset = (page - 1) * ITEMS_PER_PAGE;
+
+                let query = supabaseClient
+                    .from('donors')
+                     // Select necessary fields, including phone_number (SECURITY RISK!)
+                    .select('full_name, city, blood_type, is_ready_to_donate, last_donation_date, phone_number', { count: 'exact' })
+                    .eq('governorate', selectedGovernorate)
+                    .eq('blood_type', selectedBloodType)
+                    .eq('is_active', true);
+
+                 // --- Apply Filters ---
+                if (searchCity) {
+                    query = query.ilike('city', `%${searchCity}%`);
+                }
+                // Apply initial availability filter (only based on checkbox)
+                if (filterAvailability === 'ready') {
+                    query = query.eq('is_ready_to_donate', true);
+                }
+
+                 // --- Apply Sorting ---
+                 let sortOptions = { ascending: false }; // Default
+                 let sortColumn = 'created_at'; // Default
+
+                 switch (sortBy) {
+                     case 'last_donation_asc_nullsfirst':
+                         sortColumn = 'last_donation_date';
+                         sortOptions = { ascending: true, nullsFirst: true };
+                         break;
+                     case 'full_name_asc':
+                         sortColumn = 'full_name';
+                         sortOptions = { ascending: true };
+                         break;
+                    case 'created_at_desc': // Default
+                         sortColumn = 'created_at';
+                         sortOptions = { ascending: false };
+                         break;
+                 }
+                 query = query.order(sortColumn, sortOptions);
+
+                // Apply pagination range AFTER filters and sorting
+                query = query.range(offset, offset + ITEMS_PER_PAGE - 1);
+
+
+                 // --- Execute Query ---
+                console.warn("SECURITY RISK: Fetching phone_number directly. Ensure RLS is active!");
+                const { data: donors, error, count } = await query;
+
+                if (error) throw error; // Let the catch block handle it
+
+                // --- Process Results ---
+                let displayedCount = 0;
+                 if (donors && donors.length > 0) {
+                    resultsListDiv.innerHTML = ''; // Clear loading/previous
+                    donors.forEach(donor => {
+                         const { card, isActuallyAvailable } = renderDonorCard(donor);
+
+                         // Apply the second part of the availability filter (date check)
+                         if (filterAvailability === 'ready' && !isActuallyAvailable) {
+                             return; // Skip rendering this card if filtering by ready and they aren't actually ready
+                         }
+                         resultsListDiv.appendChild(card);
+                         displayedCount++;
+                    });
+
+                    if (displayedCount === 0 && filterAvailability === 'ready') {
+                         // Handle case where 'ready' filter removed all results from this page
+                         resultsListDiv.innerHTML = `
+                            <div class="no-results">
+                                <i class="fa-solid fa-calendar-times"></i>
+                                <p>لا يوجد متبرعون <strong>جاهزون حالياً</strong> (حسب تاريخ آخر تبرع) يطابقون بحثك في هذه الصفحة.</p>
+                                <p>جرب البحث مع حالة الجاهزية "الكل".</p>
+                            </div>`;
+                    }
+
+                    if (resultsCountSpan) {
+                        resultsCountSpan.textContent = `(إجمالي النتائج: ${count ?? 'غير معروف'})`;
+                    }
+                    setupPagination(page, count ?? 0); // Setup pagination based on total potential count
+
+                } else {
+                    // No results found message
+                    resultsListDiv.innerHTML = `
+                        <div class="no-results">
+                            <i class="fa-solid fa-heart-crack"></i>
+                            <p>لم يتم العثور على متبرعين مطابقين لمعايير البحث الحالية.</p>
+                            <p> يمكنك <a href="register.html">تسجيل بياناتك</a> لتكون أول متبرع بهذه الفصيلة في منطقتك!</p>
+                        </div>`;
+                    if (resultsCountSpan) resultsCountSpan.textContent = '(0 نتائج)';
+                }
+
+
+            } catch (catchError) {
+                console.error('Search Page: Error during search:', catchError);
+                 if (catchError.code === '42501') { // RLS Error
+                     resultsListDiv.innerHTML = `<p class="alert alert-danger">خطأ في الأذونات: لا يمكن عرض بيانات المتبرعين حالياً. (${catchError.message})</p>`;
+                 } else {
+                    resultsListDiv.innerHTML = `<p class="alert alert-danger">حدث خطأ غير متوقع أثناء البحث. (${catchError.message})</p>`;
+                 }
+                 if (resultsCountSpan) resultsCountSpan.textContent = '';
+                 paginationControlsDiv.innerHTML = ''; // Clear pagination on error
+
+            } finally {
+                loadingIndicator.style.display = 'none';
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText || '<i class="fa-solid fa-search"></i> بــحــــث'; // Restore original text
+            }
+        }
+
+        // =======================================
+        // Event Listeners
+        // =======================================
+        searchForm?.addEventListener('submit', (event) => {
+            event.preventDefault();
+            performSearch(1); // Start search from page 1
+        });
+
+        resetButton?.addEventListener('click', (event) => {
+             event.preventDefault();
+             // Reset form fields
+             searchForm.reset();
+             // Clear results area and show initial message
+             resultsListDiv.innerHTML = '';
+             if(initialMessageDiv) initialMessageDiv.style.display = 'block';
+             if (resultsCountSpan) resultsCountSpan.textContent = '';
+             paginationControlsDiv.innerHTML = ''; // Clear pagination
+        });
+
+    </script>
+
+    <!-- Shared JavaScript for nav toggle and year -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>

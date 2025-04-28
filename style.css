@@ -1,0 +1,1219 @@
+/* style.css - Qatrah Hayat Rebuild */
+
+/* ------------------------- */
+/* --- Global Variables ---- */
+/* ------------------------- */
+:root {
+    /* Color Palette */
+    --primary-color: #E74C3C; /* Vivid red, slightly orange */
+    --primary-dark: #C0392B;   /* Darker red */
+    --primary-light: #fadbd8; /* Very light red for backgrounds/highlights */
+    --secondary-color: #3498DB; /* Blue for links and accents */
+    --secondary-dark: #2980B9; /* Darker blue */
+    --text-dark: #2c3e50;      /* Main dark text color */
+    --text-light: #7f8c8d;     /* Lighter text for notes, placeholders */
+    --bg-white: #ffffff;
+    --bg-light-gray: #f8f9fa; /* Default page background */
+    --border-color: #e8e8e8;   /* Light border color */
+    --success-color: #2ECC71;  /* Green for success messages */
+    --success-light: #eafaf1;  /* Light green background */
+    --success-dark: #28b463;   /* Darker green text */
+    --warning-color: #F39C12;  /* Yellow for warnings */
+    --warning-light: #fff8e1;  /* Light yellow background */
+    --warning-dark: #d68910;   /* Darker yellow text */
+    --danger-color: #E74C3C;   /* Red for errors (same as primary) */
+    --danger-light: #fdecea;   /* Light red background */
+    --danger-dark: #c0392b;    /* Darker red text */
+
+    /* Typography & Layout */
+    --font-family: 'Cairo', sans-serif;
+    --base-font-size: 16px; /* Base size for desktop */
+    --line-height-base: 1.7;
+    --border-radius: 8px;
+    --shadow-light: 0 2px 5px rgba(0,0,0,0.08);
+    --shadow-medium: 0 5px 15px rgba(0,0,0,0.1);
+    --container-width: 1140px; /* Max width for content */
+}
+
+/* ------------------------- */
+/* ------ Base Styles ------ */
+/* ------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box; /* Consistent box model */
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--base-font-size);
+    line-height: var(--line-height-base);
+    color: var(--text-dark);
+    background-color: var(--bg-light-gray);
+    direction: rtl; /* Right-to-left layout */
+    -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    display: flex; /* Use flexbox for sticky footer */
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1; /* Allow main content to take up available space */
+}
+
+.container {
+    width: 90%; /* Fluid width */
+    max-width: var(--container-width); /* Max width constraint */
+    margin: 0 auto; /* Center container */
+    padding: 0 15px; /* Gutter space */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-dark);
+    margin-bottom: 0.7em;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+h1 { font-size: 2.5rem; font-weight: 700; }
+h2 { font-size: 2rem; margin-bottom: 40px; text-align: center; position: relative; padding-bottom: 15px; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.2rem; }
+
+/* Decor Line for H2 */
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-light); /* Default paragraph color */
+}
+section p:last-of-type {
+     margin-bottom: 0; /* Avoid extra space at the end of sections */
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--secondary-dark);
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%; /* Make images responsive */
+    height: auto;
+    display: block; /* Prevent bottom space */
+}
+
+ul { list-style: none; } /* Remove default list bullets */
+ul li { margin-bottom: 0.5rem; } /* Basic spacing for list items */
+
+/* ------------------------- */
+/* ----- Utility Classes --- */
+/* ------------------------- */
+.text-center { text-align: center; }
+.text-primary { color: var(--primary-color); }
+.text-secondary { color: var(--secondary-color); }
+.text-danger { color: var(--danger-dark); font-weight: bold; margin-right: 2px;} /* For required field markers */
+.text-light { color: var(--text-light); } /* Utility for lighter text */
+
+/* Margin Bottom Utilities */
+.mb-1 { margin-bottom: 0.5rem !important; }
+.mb-2 { margin-bottom: 1rem !important; }
+.mb-3 { margin-bottom: 1.5rem !important; }
+.mb-4 { margin-bottom: 2rem !important; }
+.mb-5 { margin-bottom: 3rem !important; }
+/* Margin Top Utilities */
+.mt-1 { margin-top: 0.5rem !important; }
+.mt-2 { margin-top: 1rem !important; }
+.mt-3 { margin-top: 1.5rem !important; }
+.mt-4 { margin-top: 2rem !important; }
+.mt-5 { margin-top: 3rem !important; }
+
+/* Hidden Utility */
+.hidden-field { display: none; }
+
+/* ------------------------- */
+/* ------- Header ---------- */
+/* ------------------------- */
+.site-header {
+    background-color: var(--bg-white);
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-light);
+    position: sticky; /* Keep header at the top */
+    top: 0;
+    z-index: 1000; /* Ensure header is above other content */
+    transition: box-shadow 0.3s ease;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between; /* Logo left, Nav right */
+    align-items: center;
+}
+
+/* Logo Styling */
+.logo a {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-decoration: none;
+    display: flex; /* Align icon and text properly */
+    align-items: center;
+}
+.logo a i {
+    color: var(--primary-color);
+    margin-left: 8px; /* Space between icon and text (RTL) */
+    font-size: 1.6rem;
+    /* vertical-align: -2px; Removed - better alignment with flex */
+}
+.logo a:hover {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+/* Desktop Navigation */
+.main-nav ul {
+    display: flex;
+    list-style: none;
+}
+.main-nav ul li {
+    margin-left: 35px; /* Spacing between nav items (RTL) */
+}
+.main-nav ul li:last-child {
+    margin-left: 0;
+}
+.main-nav ul li a {
+    color: var(--text-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 0;
+    border-bottom: 3px solid transparent; /* Underline effect */
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+    text-decoration: none;
+}
+.main-nav ul li a:hover,
+.main-nav ul li a.active { /* Style for active page link */
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Mobile Navigation Toggle Button (Hamburger) */
+.nav-toggle {
+    display: none; /* Hidden on desktop */
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 5px; /* Make it easier to tap */
+    line-height: 1; /* Prevent extra spacing */
+}
+
+/* ------------------------- */
+/* ------ Hero Section ----- */
+/* ------------------------- */
+.hero {
+    background: linear-gradient(rgba(250, 219, 216, 0.3), rgba(250, 219, 216, 0.1)), var(--bg-light-gray); /* Subtle background gradient */
+    padding: 100px 0;
+    text-align: center;
+}
+.hero h1 {
+    color: var(--primary-dark);
+    font-size: 3rem; /* Large heading for impact */
+    margin-bottom: 0.5em;
+}
+.hero p.lead {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    max-width: 700px; /* Limit line length for readability */
+    margin: 0 auto 2rem auto;
+    font-weight: 400;
+    opacity: 0.9;
+}
+.hero .cta-buttons .btn {
+    margin: 0 10px; /* Space between buttons on desktop */
+}
+/* Optional Hero Image Styling */
+.hero-image {
+    margin-top: 2rem;
+    max-width: 400px; /* Example size */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ------------------------- */
+/* ---- Section Styling ---- */
+/* ------------------------- */
+.section {
+    padding: 80px 0; /* Vertical spacing for sections */
+}
+.section-bg {
+    background-color: var(--bg-white); /* Alternate background for sections */
+}
+
+/* ------------------------- */
+/* ----- Feature Cards ----- */
+/* (Used in index.html for 'How it Works' and 'Why Donate') */
+/* ------------------------- */
+.features-grid {
+    display: grid;
+    /* Auto-fit columns: minimum 280px wide, share space equally */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; /* Space between cards */
+    margin-top: 40px; /* Space above the grid */
+}
+.feature-card {
+    background-color: var(--bg-white);
+    padding: 35px 30px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover effect */
+}
+.feature-card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: var(--shadow-medium);
+}
+.feature-card .icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+}
+.feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+.feature-card p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+.feature-card small { /* Small text within feature cards */
+    font-size: 0.8em;
+    display: block;
+    margin-top: 10px;
+    color: var(--text-light);
+}
+
+
+/* ------------------------- */
+/* -------- Buttons -------- */
+/* ------------------------- */
+.btn {
+    display: inline-block; /* Allow setting padding/margin */
+    padding: 12px 30px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease; /* Smooth transitions for hover */
+    text-decoration: none !important; /* Ensure no underlines */
+    line-height: 1.5;
+}
+.btn i {
+    margin-left: 8px; /* Space icon on the left (RTL) */
+    margin-right: 0;
+}
+/* Specific icon spacing for submit buttons where icon is often before text */
+.btn[type="submit"] i,
+.btn[type="reset"] i {
+    margin-right: 8px; /* Space icon on the right (RTL) */
+    margin-left: 0;
+}
+.btn:disabled {
+    opacity: 0.65; /* Indicate disabled state */
+    cursor: not-allowed;
+}
+
+/* Primary Button Style */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--bg-white);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: var(--bg-white);
+    transform: translateY(-2px); /* Subtle lift effect */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Secondary Button Style */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--bg-white);
+    border-color: var(--secondary-color);
+}
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--secondary-dark);
+    border-color: var(--secondary-dark);
+    color: var(--bg-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Outline Button Style */
+.btn-outline-primary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-outline-primary:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: var(--bg-white);
+    transform: translateY(-2px);
+}
+
+/* Button Sizes */
+.btn-lg {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+.btn-sm {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+/* ------------------------- */
+/* --------- Forms --------- */
+/* ------------------------- */
+.form-section {
+    background-color: var(--bg-white);
+    padding: 50px 40px; /* Generous padding on desktop */
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+    margin-top: 30px;
+    max-width: 700px; /* Limit form width for better readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group {
+    margin-bottom: 1.5rem; /* Space between form fields */
+}
+
+.form-group label {
+    display: block; /* Label on its own line */
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+.form-group label i {
+    margin-left: 6px; /* Space between icon and text (RTL) */
+    color: var(--primary-color);
+    width: 1.2em; /* Consistent icon width */
+    text-align: center;
+}
+
+/* Form Input/Select/Textarea Styling */
+.form-control {
+    display: block;
+    width: 100%; /* Take full width of container */
+    padding: 12px 15px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-dark);
+    background-color: var(--bg-light-gray); /* Light background for inputs */
+    background-clip: padding-box;
+    border: 1px solid var(--border-color);
+    appearance: none; /* Remove default OS styling */
+    border-radius: var(--border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; /* Focus transition */
+}
+.form-control::placeholder {
+    color: var(--text-light);
+    opacity: 0.8;
+}
+.form-control:focus {
+    color: var(--text-dark);
+    background-color: var(--bg-white);
+    border-color: var(--primary-color);
+    outline: 0; /* Remove default focus outline */
+    box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.2); /* Custom focus glow */
+}
+/* Style invalid fields based on HTML5 validation */
+.form-control:invalid, .form-control.is-invalid { /* Added .is-invalid for JS validation */
+    border-color: var(--danger-dark);
+}
+.form-control:focus:invalid, .form-control.is-invalid:focus {
+    border-color: var(--danger-dark);
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+/* Styling for select dropdown arrow (RTL) */
+select.form-control {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 0.75rem center; /* Arrow on the left for RTL */
+    background-size: 16px 12px;
+    padding-left: 2.5rem; /* Make space for the arrow */
+    padding-right: 15px; /* Reset right padding */
+}
+
+textarea.form-control {
+    min-height: 120px; /* Default height for textareas */
+    resize: vertical; /* Allow vertical resizing */
+}
+
+/* Radio Button Group Styling */
+.radio-group label {
+    margin-left: 15px; /* Space between radio options (RTL) */
+    margin-right: 0;
+    cursor: pointer;
+    display: inline-block; /* Keep label next to input */
+    margin-bottom: 0.5rem; /* Space below each radio option */
+    vertical-align: middle;
+}
+.radio-group input[type="radio"] {
+    margin-left: 5px; /* Space between radio and label (RTL) */
+    margin-right: 0;
+    cursor: pointer;
+    vertical-align: middle; /* Align radio button with text */
+}
+
+/* Checkbox Styling */
+.form-check {
+    display: flex; /* Align checkbox and label */
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.1em;
+    margin-left: 0.7em; /* Space between checkbox and label (RTL) */
+    margin-right: 0;
+    vertical-align: top;
+    background-color: var(--bg-light-gray);
+    border: 1px solid var(--border-color);
+    border-radius: 0.25em;
+    appearance: none; /* Remove default checkbox */
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    position: relative; /* Needed for custom checkmark */
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+/* Custom Checkmark */
+.form-check-input:checked::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 10px;
+    border: solid var(--bg-white);
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -60%) rotate(45deg); /* Center and style checkmark */
+}
+.form-check-input:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.2); /* Focus glow */
+}
+.form-check-label {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1.5; /* Ensure label aligns well */
+}
+.form-check-label a {
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+/* Helper Text Below Inputs */
+.form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+.form-group small.warning {
+    color: var(--primary-dark); /* Use darker primary for warnings */
+    font-weight: 500;
+}
+
+/* Form Feedback Areas (for JS messages) */
+.form-feedback-area {
+    margin-top: 15px;
+    text-align: center;
+    min-height: 1.5em; /* Reserve space to prevent layout shifts */
+}
+.field-feedback { /* For inline field feedback (e.g., phone number check) */
+    font-size: 0.85rem;
+    margin-top: 5px;
+    min-height: 1.2em; /* Reserve space */
+    font-weight: 500;
+    display: block; /* Ensure it takes space */
+}
+.field-feedback.success { color: var(--success-dark); }
+.field-feedback.error { color: var(--danger-dark); }
+.field-feedback.checking { color: var(--secondary-color); font-style: italic; }
+
+/* Form Divider Line */
+hr.form-divider {
+    margin: 2.5rem 0;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+}
+
+/* General Alert Styles (used in JS feedback) */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+}
+.alert-success {
+    color: var(--success-dark);
+    background-color: var(--success-light);
+    border-color: var(--success-color);
+}
+.alert-danger {
+    color: var(--danger-dark);
+    background-color: var(--danger-light);
+    border-color: var(--danger-color);
+}
+.alert-warning {
+    color: var(--warning-dark);
+    background-color: var(--warning-light);
+    border-color: var(--warning-color);
+}
+
+/* ------------------------- */
+/* ----- Search Results ---- */
+/* ------------------------- */
+#search-results {
+    margin-top: 40px; /* Space above results section */
+}
+#search-results h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-dark);
+    display: flex; /* Align icon and text */
+    align-items: center;
+}
+#search-results h3 i {
+    margin-left: 8px; /* Space icon (RTL) */
+    color: var(--primary-color);
+}
+#results-count { /* Style for the count span */
+    font-size: 0.8em;
+    color: var(--text-light);
+    font-weight: normal;
+    margin-right: 10px; /* Space from title (RTL) */
+}
+
+/* Individual Donor Result Card */
+.donor-result-card {
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 15px 20px;
+    margin-bottom: 15px; /* Space between cards */
+    box-shadow: var(--shadow-light);
+    display: flex; /* Arrange info and status side-by-side */
+    justify-content: space-between;
+    align-items: center; /* Vertically center items */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px; /* Space between wrapped items */
+    transition: box-shadow 0.2s ease-in-out;
+}
+.donor-result-card:hover {
+    box-shadow: var(--shadow-medium);
+}
+
+/* Donor Information Block (Left/Top) */
+.donor-info {
+    flex-grow: 1; /* Allow info block to take available space */
+}
+.donor-info span {
+    display: block; /* Stack info items vertically */
+    margin-bottom: 8px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.donor-info span:last-child {
+    margin-bottom: 0;
+}
+.donor-info i.fa-fw { /* Fixed width icons for alignment */
+     width: 1.2em;
+     margin-left: 8px; /* Space icon (RTL) */
+     text-align: center;
+     color: var(--secondary-color); /* Icon color */
+}
+.donor-info strong { /* Highlighted data */
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-right: 3px; /* Small space after label (RTL) */
+}
+.donor-info .blood-type-value { /* Special style for blood type */
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    padding: 2px 8px;
+    background-color: var(--primary-light);
+    border-radius: 4px;
+    display: inline-block; /* Keep highlight contained */
+}
+.donor-info .phone-number { /* Style for phone number */
+    color: var(--primary-dark);
+    font-weight: 600;
+    direction: ltr; /* Ensure phone number reads LTR */
+    unicode-bidi: embed; /* Force LTR within RTL context */
+    display: inline-block;
+    background: #eee; /* Subtle background highlight */
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 0 2px; /* Small horizontal margin */
+}
+.donor-info .phone-number i { /* Match icon color */
+    color: var(--primary-dark) !important;
+}
+
+/* Availability Status Block (Right/Bottom) */
+.availability-status {
+    text-align: left; /* Align status text left (RTL makes this right visually) */
+    flex-shrink: 0; /* Prevent status from shrinking */
+    margin-top: 5px; /* Small top margin when wrapped */
+}
+.availability-status .ready {
+    color: var(--success-dark); /* Green for ready */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.availability-status .not-ready {
+    color: var(--warning-dark); /* Orange for not ready */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.availability-status i {
+    margin-left: 5px; /* Space icon (RTL) */
+    font-size: 0.9em;
+}
+
+/* Loading Indicator */
+#loading-indicator {
+    display: none; /* Hidden by default */
+    text-align: center;
+    padding: 30px;
+    color: var(--text-light);
+}
+#loading-indicator i { /* Spinner icon */
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    display: block; /* Center icon */
+}
+
+/* No Results Message */
+.no-results {
+    text-align: center;
+    padding: 30px 15px;
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius);
+    color: var(--text-light);
+    border: 1px dashed var(--border-color);
+    margin-top: 20px;
+}
+.no-results i { /* Icon for no results */
+    font-size: 2.5rem;
+    color: var(--secondary-color); /* Use secondary color for info */
+    opacity: 0.7;
+    margin-bottom: 15px;
+    display: block;
+}
+.no-results p {
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+/* Pagination Controls */
+#pagination-controls {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+#pagination-controls button {
+    margin: 0 5px; /* Space buttons */
+}
+#pagination-controls span { /* Page X of Y text */
+    margin: 0 10px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+
+/* Privacy and Warning Notices */
+.privacy-notice, .warning-notice {
+    margin-top: 1.5rem;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    border-right: 5px solid; /* Side border for emphasis (RTL) */
+}
+.privacy-notice {
+    background-color: var(--secondary-light); /* Use secondary colors for info */
+    color: var(--secondary-dark);
+    border-color: var(--secondary-color);
+}
+.warning-notice {
+    background-color: var(--warning-light);
+    color: var(--warning-dark);
+    border-color: var(--warning-color);
+}
+.privacy-notice strong, .warning-notice strong {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.privacy-notice i, .warning-notice i {
+    margin-left: 8px; /* Space icon (RTL) */
+}
+.privacy-notice p, .warning-notice p { /* Ensure paragraph text matches notice color */
+    color: inherit;
+    margin-bottom: 0;
+    font-size: inherit;
+}
+
+/* ------------------------- */
+/* ------ Advice Page ------ */
+/* ------------------------- */
+.advice-category {
+    margin-bottom: 3rem;
+    background: var(--bg-white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    border-right: 5px solid var(--secondary-color); /* Accent border (RTL) */
+}
+.advice-category h3 {
+    color: var(--secondary-dark); /* Use secondary color for advice titles */
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.8rem;
+    display: flex; /* Align icon */
+    align-items: center;
+}
+.advice-category h3 i {
+    margin-left: 10px; /* Space icon (RTL) */
+    font-size: 1.3rem;
+}
+
+.advice-list li {
+    margin-bottom: 1rem;
+    padding-right: 30px; /* Indent text to make space for icon (RTL) */
+    position: relative; /* For icon positioning */
+    font-size: 1rem;
+    color: var(--text-dark);
+    line-height: 1.8; /* Improve readability */
+}
+/* Icon Styling within Advice List */
+.advice-list li i {
+    position: absolute;
+    right: 0; /* Position icon to the right (RTL) */
+    top: 5px;
+    font-size: 1.2rem;
+    width: 1.2em; /* Consistent icon width */
+    text-align: center;
+    left: auto; /* Reset left positioning */
+}
+/* Specific icon colors */
+.advice-list li i.fa-check-circle,
+.advice-list li i.fa-check-double { color: var(--success-dark); }
+.advice-list li i.fa-info-circle { color: var(--secondary-dark); }
+.advice-list li i.fa-exclamation-triangle { color: var(--warning-dark); }
+.advice-list li i.fa-ban { color: var(--danger-dark); } /* For avoid/ban icons */
+.advice-list li i.fa-calendar-day,
+.advice-list li i.fa-hand-holding-droplet,
+.advice-list li i.fa-calendar-check { color: var(--secondary-color); } /* Category icons */
+
+.medical-disclaimer {
+    margin-top: 2rem;
+    padding: 15px;
+    background-color: var(--warning-light);
+    border: 1px solid var(--warning-color);
+    color: var(--warning-dark);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    text-align: center;
+}
+.medical-disclaimer i {
+    margin-left: 5px; /* Space icon (RTL) */
+}
+
+/* ------------------------- */
+/* ------- About Page ------ */
+/* ------------------------- */
+.about-section {
+    margin-bottom: 2rem;
+    padding: 25px; /* Slightly reduced padding */
+    background: var(--bg-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+}
+.about-section h3 {
+    color: var(--primary-dark); /* Use primary dark for section titles */
+    margin-bottom: 1rem;
+    display: flex; /* Align icon and text */
+    align-items: center;
+}
+.about-section h3 i {
+    margin-left: 10px; /* Space icon (RTL) */
+    font-size: 1.2em;
+    color: var(--primary-color); /* Icon color */
+}
+/* Values List Grid (inherently responsive) */
+.values-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted min width */
+    gap: 1rem;
+    padding-right: 0; /* Remove default padding */
+    margin-top: 1rem;
+}
+.values-list li {
+     background: var(--bg-light-gray);
+     padding: 10px 15px;
+     border-radius: var(--border-radius);
+     display: flex;
+     align-items: center;
+     font-weight: 500;
+     font-size: 0.95rem;
+}
+.values-list li i {
+     margin-left: 8px; /* Space icon (RTL) */
+     color: var(--success-dark);
+     flex-shrink: 0; /* Prevent icon shrinking */
+}
+
+/* Creators Section */
+.creators-section {
+    background-color: var(--bg-white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    border-top: 4px solid var(--primary-color); /* Accent border */
+    margin-top: 3rem;
+}
+.creators-section h3 {
+    text-align: center;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center heading */
+}
+.creators-section h3 i {
+    margin-left: 10px; /* Space icon (RTL) */
+    color: var(--primary-color);
+}
+/* Flexbox for creators */
+.creators-container { /* Changed from -grid for simplicity */
+    display: flex;
+    justify-content: space-around; /* Distribute space */
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 20px;
+    margin-top: 1.5rem;
+}
+.creator-item {
+    text-align: center;
+    padding: 15px;
+    flex-basis: 250px; /* Base width before wrapping */
+    flex-grow: 1; /* Allow items to grow */
+}
+.creator-item i {
+    font-size: 2.5rem; /* Larger icon */
+    color: var(--secondary-color);
+    margin-bottom: 0.8rem;
+    display: block;
+}
+.creator-item strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+/* ------------------------- */
+/* ----- Privacy Page ------ */
+/* ------------------------- */
+.privacy-content {
+    background: var(--bg-white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    margin-top: 20px;
+}
+.privacy-content h3 {
+    color: var(--primary-dark);
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    font-size: 1.4rem; /* Slightly smaller headings for policy */
+}
+.privacy-content h3:first-of-type {
+    margin-top: 0;
+}
+/* List styling for policy points */
+.privacy-content ul {
+    list-style: disc; /* Use standard bullets */
+    margin-right: 20px; /* Indent list (RTL) */
+    padding-right: 15px;
+    margin-bottom: 1rem;
+}
+.privacy-content ul li {
+    margin-bottom: 0.6rem;
+    color: var(--text-dark);
+}
+.privacy-content p {
+    color: var(--text-dark); /* Darker text for readability */
+    line-height: 1.8;
+}
+.privacy-content strong {
+    font-weight: 600;
+}
+.privacy-content em { /* Style for last updated text */
+    font-size: 0.9em;
+    color: var(--text-light);
+    display: block; /* Put on its own line */
+    margin-top: 2rem;
+}
+
+
+/* ------------------------- */
+/* -------- Footer --------- */
+/* ------------------------- */
+.site-footer {
+    background-color: var(--text-dark); /* Dark background */
+    color: rgba(255, 255, 255, 0.7); /* Light text */
+    padding: 40px 0;
+    /* margin-top: 80px; Removed - flexbox in body handles spacing */
+    text-align: center;
+    font-size: 0.9rem;
+    width: 100%; /* Ensure footer spans width */
+}
+.site-footer p {
+    margin-bottom: 0.5rem;
+    color: inherit; /* Inherit footer color */
+}
+.site-footer a {
+    color: var(--primary-light); /* Lighter link color */
+    text-decoration: underline;
+}
+.site-footer a:hover {
+    color: var(--bg-white); /* Brighter link on hover */
+}
+.footer-credits {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+.footer-supervision {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 5px;
+}
+.footer-supervision i {
+    margin-left: 5px; /* Space icon (RTL) */
+    color: var(--primary-light);
+}
+
+/* ------------------------- */
+/* --- Responsive Styles --- */
+/* ------------------------- */
+
+/* Medium devices (tablets, small laptops, 992px and down) */
+@media (max-width: 992px) {
+    :root { --base-font-size: 15px; } /* Slightly smaller base font */
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.3rem; }
+    .container { width: 95%; } /* Use slightly more screen width */
+
+    /* --- Mobile Navigation Activation --- */
+    .main-nav {
+        display: none; /* Hide desktop nav links container */
+        position: absolute; /* Position dropdown below header */
+        top: 100%; /* Start right below the header */
+        left: 0;
+        right: 0;
+        width: 100%;
+        background-color: var(--bg-white);
+        box-shadow: var(--shadow-medium); /* Add shadow to dropdown */
+        padding: 0; /* Remove padding, handled by li */
+        border-top: 1px solid var(--border-color);
+        max-height: calc(100vh - 70px); /* Limit height to viewport minus header */
+        overflow-y: auto; /* Allow scrolling if nav is long */
+        z-index: 999; /* Ensure it's below header but above content */
+    }
+    /* Style the nav when the 'is-active' class is added by JS */
+     .main-nav.is-active {
+        display: block;
+    }
+     /* Stack nav items vertically */
+     .main-nav ul {
+        flex-direction: column;
+        align-items: stretch; /* Make items full width */
+        width: 100%;
+    }
+    .main-nav ul li {
+        margin: 0; /* Remove horizontal margin */
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color); /* Separator lines */
+    }
+     .main-nav ul li:last-child {
+        border-bottom: none; /* Remove last border */
+     }
+    /* Style mobile nav links */
+    .main-nav ul li a {
+        padding: 15px 20px; /* Larger tap target */
+        display: block; /* Make link fill the list item */
+        border-bottom: none; /* Remove desktop underline style */
+        width: 100%;
+        font-weight: 500; /* Slightly bolder */
+        color: var(--text-dark);
+    }
+     .main-nav ul li a:hover,
+     .main-nav ul li a.active {
+        background-color: var(--primary-light); /* Highlight active/hovered */
+        color: var(--primary-dark);
+        font-weight: 600;
+    }
+
+    .nav-toggle { display: block; /* Show hamburger icon */ }
+
+    /* Adjustments for other sections */
+    .hero h1 { font-size: 2.5rem; }
+    .hero p.lead { font-size: 1.1rem; }
+    .section { padding: 60px 0; } /* Reduce section padding */
+    .form-section { padding: 40px 25px; } /* Reduce form padding */
+    .advice-category { padding: 25px; }
+    .about-section { padding: 20px; }
+    .creators-section { padding: 25px; }
+    .privacy-content { padding: 25px; }
+}
+
+/* Small devices (landscape phones, large portrait phones, 768px and down) */
+@media (max-width: 768px) {
+    /* Make feature cards stack into a single column */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .form-section { padding: 30px 20px; } /* Further reduce form padding */
+    .hero { padding: 80px 0; }
+    .hero h1 { font-size: 2rem; }
+    .hero p.lead { font-size: 1rem; }
+    /* Stack hero buttons vertically */
+    .hero .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px; /* Space between stacked buttons */
+    }
+    .hero .cta-buttons .btn {
+        margin: 0; /* Remove horizontal margin */
+        width: 80%;
+        max-width: 300px; /* Limit button width */
+    }
+    .btn-lg { padding: 12px 30px; font-size: 1rem; } /* Slightly smaller large buttons */
+
+    /* Search results card adjustments */
+    .donor-result-card {
+        align-items: flex-start; /* Align wrapped items to top */
+    }
+    .availability-status {
+        text-align: right; /* Align status right (RTL) on mid screens */
+        width: auto; /* Allow it to shrink wrap */
+        padding-right: 0; /* Reset padding if any */
+    }
+    .values-list { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } /* Adjust value list slightly */
+}
+
+/* Extra small devices (portrait phones, 576px and down) */
+@media (max-width: 576px) {
+    :root { --base-font-size: 14px; } /* Even smaller base font */
+    body { line-height: 1.6; } /* Adjust line height for smaller font */
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; margin-bottom: 30px;}
+    h2::after { width: 60px; height: 3px;} /* Smaller heading underline */
+    h3 { font-size: 1.2rem; }
+    .logo a { font-size: 1.6rem;} /* Smaller logo */
+    .logo a i { font-size: 1.4rem;}
+    .site-footer { font-size: 0.85rem; padding: 30px 0;} /* Smaller footer text/padding */
+    .section { padding: 50px 0; } /* Reduce section padding further */
+    .hero { padding: 60px 0; }
+    .hero h1 { font-size: 1.9rem; }
+    .hero p.lead { font-size: 1rem; }
+
+    /* Stack search result card content vertically */
+    .donor-result-card {
+        flex-direction: column; /* Stack vertically */
+        align-items: stretch; /* Stretch items to full width */
+        padding: 15px; /* Adjust padding */
+    }
+    .donor-info {
+        width: 100%; /* Ensure info takes full width */
+    }
+    .donor-info span {
+        font-size: 0.9rem; /* Slightly smaller text in card */
+    }
+     .availability-status {
+        margin-top: 10px; /* Space above status when stacked */
+        width: 100%; /* Take full width */
+        text-align: right; /* Align status text right (RTL default) */
+        padding-top: 10px; /* Add padding above status */
+        border-top: 1px dashed var(--border-color); /* Separator line */
+    }
+     .donor-info .phone-number { font-size: 1rem; } /* Slightly larger phone number for readability */
+
+    .form-section { padding: 25px 15px; } /* Minimum form padding */
+    .pagination-controls button { padding: 6px 12px; font-size: 0.85rem; } /* Smaller pagination buttons */
+    .pagination-controls span { font-size: 0.85rem; margin: 0 5px;}
+    .values-list { grid-template-columns: 1fr; } /* Stack values list on smallest screens */
+    .creators-container { flex-direction: column; align-items: center;} /* Stack creators */
+    .creator-item { flex-basis: auto; width: 90%; max-width: 300px;} /* Adjust creator item size */
+}

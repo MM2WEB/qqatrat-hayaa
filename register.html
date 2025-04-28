@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل متبرع جديد - قطرة حياة</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="ChatGPT Image 25 أبريل 2025، 10_18_20 م.png">
+    <style>
+        /* Simple styles for dynamic feedback and hiding */
+        .field-feedback {
+            font-size: 0.85rem;
+            margin-top: 5px;
+            min-height: 1.2em; /* Reserve space */
+            font-weight: 500; /* Make feedback slightly bolder */
+        }
+        .field-feedback.success { color: var(--success-dark); }
+        .field-feedback.error { color: var(--danger-dark); }
+        .field-feedback.checking { color: var(--secondary-color); font-style: italic; } /* Style for checking state */
+        .hidden-field { display: none; }
+        hr.form-divider {
+            margin: 2.5rem 0;
+            border: 0;
+            border-top: 1px solid var(--border-color);
+        }
+         .radio-group label { margin-left: 15px; cursor: pointer;} /* Space between radio options */
+         .radio-group input[type="radio"] { margin-left: 5px; cursor: pointer;}
+         /* Style invalid fields slightly */
+         .form-control:invalid {
+             border-color: #fdb8b8; /* Light red border for invalid */
+         }
+         .form-control:focus:invalid {
+             border-color: var(--danger-color);
+             box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+         }
+         /* Style valid fields after interaction (optional) */
+        /* input:optional:valid { border-color: var(--success-color); } */
+         /* Style required indicator */
+         .text-danger { color: var(--danger-dark); font-weight: bold; margin-right: 2px;}
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><i class="fa-solid fa-droplet"></i> قطرة حياة</a>
+            </div>
+            <nav class="main-nav">
+                 <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="register.html" class="active">تسجيل متبرع</a></li>
+                    <li><a href="search.html">البحث عن متبرع</a></li>
+                    <li><a href="advice.html">نصائح طبية</a></li>
+                    <li><a href="about.html">عن المبادرة</a></li>
+                    <li><a href="suggestions.html">اتصل بنا</a></li>
+                </ul>
+            </nav>
+             <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+             <div class="form-section">
+                <h2 class="text-center mb-3">كن بطلاً، سجل بياناتك كمتبرع</h2>
+                <p class="text-center mb-5" style="color: var(--text-light);">شكراً لمبادرتك الإنسانية. بياناتك تساعدنا في ربطك بالحالات الطارئة والمحتاجين.<br>الحقول المعلمة بـ <span class="text-danger">*</span> مطلوبة.</p>
+
+                <form id="registration-form" novalidate> <!-- novalidate prevents default browser validation messages -->
+                    <!-- Personal Information Section -->
+                    <h4><i class="fa-solid fa-user-circle"></i> المعلومات الشخصية</h4>
+                    <div class="form-group">
+                        <label for="fullname"><i class="fa-solid fa-user fa-fw"></i> الاسم الكامل:<span class="text-danger">*</span></label>
+                        <input type="text" id="fullname" name="fullname" class="form-control" required placeholder="الاسم الثلاثي كما في الهوية">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone"><i class="fa-solid fa-phone fa-fw"></i> رقم الهاتف (9 أرقام تبدأ بـ 77/78/71/73):<span class="text-danger">*</span></label>
+                        <input type="tel"
+                               id="phone"
+                               name="phone"
+                               class="form-control"
+                               required
+                               placeholder="77xxxxxxxx"
+                               pattern="^(77|78|71|73)\d{7}$"
+                               maxlength="9"
+                               title="الرجاء إدخال 9 أرقام تبدأ بـ 77 أو 78 أو 71 أو 73 (بدون رمز الدولة +967)">
+                        <!-- Feedback area for phone (validation and uniqueness) -->
+                        <div id="phone-feedback" class="field-feedback"></div>
+                        <small class="warning">سيتم التعامل مع رقمك بسرية. حالياً قد يظهر للمستخدمين عند البحث.</small>
+                         <small style="display: block; margin-top: 3px;">ملاحظة: أدخل الرقم المكون من 9 خانات مباشرة بدون رمز الدولة.</small>
+                    </div>
+
+                    <hr class="form-divider">
+
+                     <!-- Location Information Section -->
+                     <h4><i class="fa-solid fa-map-location-dot"></i> معلومات الموقع</h4>
+                     <div class="form-group">
+                        <label for="governorate"><i class="fa-solid fa-map-marker-alt fa-fw"></i> المحافظة:<span class="text-danger">*</span></label>
+                        <select id="governorate" name="governorate" class="form-control" required>
+                            <option value="" disabled selected>-- اختر المحافظة --</option>
+                            <option value="صنعاء">أمانة العاصمة / صنعاء</option>
+                            <option value="عدن">عدن</option>
+                            <option value="تعز">تعز</option>
+                            <option value="الحديدة">الحديدة</option>
+                            <option value="إب">إب</option>
+                            <option value="ذمار">ذمار</option>
+                            <option value="حضرموت">حضرموت</option>
+                            <option value="لحج">لحج</option>
+                            <option value="أبين">أبين</option>
+                            <option value="الضالع">الضالع</option>
+                            <option value="عمران">عمران</option>
+                            <option value="المحويت">المحويت</option>
+                            <option value="حجة">حجة</option>
+                            <option value="صعدة">صعدة</option>
+                            <option value="شبوة">شبوة</option>
+                            <option value="المهرة">المهرة</option>
+                            <option value="مأرب">مأرب</option>
+                            <option value="الجوف">الجوف</option>
+                            <option value="ريمة">ريمة</option>
+                            <option value="البيضاء">البيضاء</option>
+                            <option value="سقطرى">أرخبيل سقطرى</option>
+                        </select>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="city"><i class="fa-solid fa-map-pin fa-fw"></i> المدينة/المديرية/الحي (اختياري):</label>
+                        <input type="text" id="city" name="city" class="form-control" placeholder="مثال: مديرية التحرير، حي الجامعة، كريتر...">
+                         <small>تحديد المنطقة الأقرب يساعد كثيرًا في سرعة الوصول للحالات الطارئة.</small>
+                    </div>
+
+                    <hr class="form-divider">
+
+                     <!-- Donation Information Section -->
+                     <h4><i class="fa-solid fa-droplet"></i> معلومات التبرع</h4>
+                     <div class="form-group">
+                        <label for="bloodtype"><i class="fa-solid fa-tint fa-fw"></i> فصيلة الدم:<span class="text-danger">*</span></label>
+                        <select id="bloodtype" name="bloodtype" class="form-control" required>
+                            <option value="" disabled selected>-- اختر الفصيلة --</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+
+                     <!-- Ask about previous donation -->
+                     <div class="form-group">
+                         <label><i class="fa-solid fa-clock-rotate-left fa-fw"></i> هل تبرعت بالدم خلال الـ 3 أشهر الماضية؟<span class="text-danger">*</span></label>
+                         <div class="radio-group">
+                            <input type="radio" id="donated_yes" name="has_donated_recently" value="yes" class="form-check-input" required>
+                            <label for="donated_yes">نعم</label>
+                            <input type="radio" id="donated_no" name="has_donated_recently" value="no" class="form-check-input" required> <!-- Default to No -->
+                            <label for="donated_no">لا (أو مر أكثر من 3 أشهر)</label>
+                         </div>
+                     </div>
+
+                    <!-- Last donation date (hidden by default, now controlled by the radio above) -->
+                    <div class="form-group hidden-field" id="last_donation_group">
+                        <label for="last_donation"><i class="fa-solid fa-calendar-alt fa-fw"></i> إذا كانت الإجابة "نعم"، متى كان تاريخ آخر تبرع تقريبًا؟ (اختياري):</label>
+                        <input type="date" id="last_donation" name="last_donation" class="form-control">
+                        <small>هذا يساعدنا في تقدير موعد جاهزيتك التالية للتبرع.</small>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" id="ready_to_donate" name="ready_to_donate" value="yes" class="form-check-input" checked>
+                        <label for="ready_to_donate" class="form-check-label">أنا مستعد ومؤهل مبدئياً للتبرع حالياً إذا لزم الأمر <span class="text-danger">*</span>.</label>
+                    </div>
+
+                     <div class="form-check">
+                        <input type="checkbox" id="privacy_policy" name="privacy_policy" class="form-check-input" required>
+                        <label for="privacy_policy" class="form-check-label">قرأت وأوافق على <a href="privacy.html" target="_blank">شروط الاستخدام وسياسة الخصوصية</a><span class="text-danger">*</span>.</label>
+                         <small style="display: block; margin-top: 5px;">
+                             (<a href="advice.html#eligibility" target="_blank" style="font-size: 0.9em;">تأكد من معرفة شروط التبرع الأساسية</a>)
+                         </small>
+                     </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" id="submit-button" class="btn btn-primary btn-lg"><i class="fa-solid fa-user-plus"></i> تسجيل كمتبرع</button>
+                    </div>
+                     <!-- General Feedback area -->
+                     <div id="form-feedback" class="form-feedback-area" style="margin-top: 15px;"></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+             <p>موقع قطرة حياة الخيري © <span id="year"></span> - مبادرة تطوعية لإنقاذ الأرواح.</p>
+            <p class="footer-credits">فكرة وتصميم: المبرمج معتصم عبدالله محمود الجيلاني | الدكتور محمد عبدوه الجيلاني.</p>
+            <p class="footer-supervision"><i class="fa-solid fa-university"></i> تحت إشراف: المعهد الوطني للعلوم والتكنولوجيا</p>
+            <p><a href="privacy.html">سياسة الخصوصية وشروط الاستخدام</a></p>
+        </div>
+    </footer>
+
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Custom JS Code for Registration (UPDATED & FINALIZED) -->
+    <script>
+        // =======================================
+        // Supabase Initialization
+        // =======================================
+        const SUPABASE_URL = 'https://zohlhmkwntwksjwmjaeh.supabase.co'; // تأكد من صحة الرابط
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvaGxobWt3bnR3a3Nqd21qYWVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUwODQzMjksImV4cCI6MjA2MDY2MDMyOX0.T_kUouU6pIaYIj1ChE7AQFREF11CxfSRlKeOvlld8i8';     // Supabase Initialization (!!! MUST BE FIRST !!!)
+        let supabaseClient;
+        try {
+            if (!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error("Supabase URL or Key missing");
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('Supabase Client Initialized for Register Page:', supabaseClient);
+        } catch (error) {
+             console.error("Error initializing Supabase:", error);
+             alert("خطأ فادح: لا يمكن الاتصال بقاعدة البيانات.");
+             document.getElementById('registration-form')?.setAttribute('disabled', 'true');
+             document.getElementById('form-feedback').innerHTML = '<p class="alert alert-danger">تعذر تهيئة الاتصال.</p>';
+        }
+
+        // =======================================
+        // DOM Elements & Variables
+        // =======================================
+        const registrationForm = document.getElementById('registration-form');
+        const submitButton = document.getElementById('submit-button');
+        const formFeedback = document.getElementById('form-feedback');
+        const phoneInput = document.getElementById('phone');
+        const phoneFeedbackDiv = document.getElementById('phone-feedback');
+        const hasDonatedRadios = document.querySelectorAll('input[name="has_donated_recently"]'); // Updated name
+        const lastDonationGroup = document.getElementById('last_donation_group');
+        const lastDonationInput = document.getElementById('last_donation');
+        const YEMENI_MOBILE_REGEX = /^(77|78|71|73)\d{7}$/; // Regex
+
+        let isPhoneFormatValid = false;
+        let isPhoneUnique = true;
+        let isCheckingPhone = false; // Flag to prevent multiple checks at once
+
+        // =======================================
+        // Helper Functions
+        // =======================================
+         function showFormFeedback(message, type = 'danger') {
+             if (formFeedback) {
+                 formFeedback.innerHTML = `<p class="alert alert-${type}">${message}</p>`;
+             }
+              console.log(`Form Feedback (${type}):`, message);
+         }
+
+         function clearFormFeedback() {
+             if (formFeedback) formFeedback.innerHTML = '';
+         }
+
+         function showPhoneFeedback(message, type = 'error') { // type: 'error', 'success', 'checking'
+             if (phoneFeedbackDiv) {
+                 phoneFeedbackDiv.textContent = message;
+                 phoneFeedbackDiv.className = `field-feedback ${type}`;
+             }
+             // Disable submit button on definite error (format or uniqueness confirmed)
+             if (submitButton) {
+                 submitButton.disabled = (type === 'error');
+             }
+         }
+
+         function clearPhoneFeedback() {
+             if (phoneFeedbackDiv) {
+                 phoneFeedbackDiv.textContent = '';
+                 phoneFeedbackDiv.className = 'field-feedback';
+             }
+             // Tentatively re-enable submit button when feedback is cleared
+             if(submitButton && !isCheckingPhone) submitButton.disabled = false;
+         }
+
+        // =======================================
+        // Event Listeners
+        // =======================================
+
+        // --- Toggle Last Donation Date Field ---
+         hasDonatedRadios.forEach(radio => {
+            radio.addEventListener('change', (event) => {
+                 // Show date field only if 'yes' is selected
+                if (event.target.value === 'yes') {
+                    lastDonationGroup?.classList.remove('hidden-field');
+                } else {
+                    lastDonationGroup?.classList.add('hidden-field');
+                    lastDonationInput.value = ''; // Clear date if hidden
+                }
+            });
+        });
+
+        // --- Validate Phone Format and Check Uniqueness on Blur ---
+         phoneInput?.addEventListener('input', () => {
+             // Clear feedback and reset flags as user types
+             clearPhoneFeedback();
+             isPhoneFormatValid = false;
+             isPhoneUnique = true;
+             // Enforce maxlength (though HTML5 attribute should handle it)
+             if (phoneInput.value.length > 9) {
+                phoneInput.value = phoneInput.value.slice(0, 9);
+             }
+         });
+
+         phoneInput?.addEventListener('blur', async () => {
+             if (isCheckingPhone) return; // Prevent check if already running
+
+             const phoneNumber = phoneInput.value.trim();
+             clearPhoneFeedback(); // Clear any previous message
+             isPhoneFormatValid = false;
+             isPhoneUnique = true;
+             if (submitButton) submitButton.disabled = false; // Tentatively re-enable
+
+             if (!phoneNumber) {
+                 return; // Don't validate empty field
+             }
+
+             // 1. Validate Format
+             if (!YEMENI_MOBILE_REGEX.test(phoneNumber)) {
+                 showPhoneFeedback('صيغة الرقم غير صحيحة (9 أرقام تبدأ بـ 77/78/71/73)', 'error');
+                 isPhoneFormatValid = false;
+                 return; // Stop
+             }
+
+             // Format is valid
+             isPhoneFormatValid = true;
+             if (!supabaseClient) {
+                 showPhoneFeedback('الصيغة صحيحة (تعذر التحقق من التفرد).', 'warning');
+                 isPhoneUnique = true; // Allow submission, rely on DB
+                 return;
+             }
+
+             // 2. Check Uniqueness
+             isCheckingPhone = true;
+             showPhoneFeedback('جاري التحقق...', 'checking');
+             if (submitButton) submitButton.disabled = true; // Disable while checking
+
+             try {
+                 const { count, error } = await supabaseClient
+                     .from('donors')
+                     .select('*', { count: 'exact', head: true })
+                     .eq('phone_number', phoneNumber);
+
+                 if (error) {
+                     console.error("Error checking phone uniqueness:", error);
+                     showPhoneFeedback('خطأ أثناء التحقق من الرقم.', 'error');
+                     isPhoneUnique = false;
+                 } else if (count > 0) {
+                     showPhoneFeedback('هذا الرقم مسجل بالفعل.', 'error');
+                     isPhoneUnique = false;
+                 } else {
+                     showPhoneFeedback('الرقم متاح للتسجيل.', 'success');
+                     isPhoneUnique = true;
+                 }
+             } catch (err) {
+                 console.error("Unexpected error checking phone:", err);
+                 showPhoneFeedback('خطأ غير متوقع أثناء التحقق.', 'error');
+                 isPhoneUnique = false;
+             } finally {
+                 isCheckingPhone = false;
+                 // Re-enable button ONLY if format is valid AND number is unique
+                 if (submitButton) submitButton.disabled = !(isPhoneFormatValid && isPhoneUnique);
+             }
+         });
+
+        // --- Form Submission ---
+        registrationForm?.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            clearFormFeedback();
+
+            const phoneNumber = phoneInput.value.trim();
+
+            // 1. Final Format Check
+            if (!YEMENI_MOBILE_REGEX.test(phoneNumber)) {
+                 showFormFeedback('الرجاء التأكد من أن رقم الهاتف يتكون من 9 أرقام ويبدأ بـ 77/78/71/73.', 'warning');
+                 showPhoneFeedback('صيغة الرقم غير صحيحة.', 'error');
+                 phoneInput.focus();
+                 return;
+            }
+            isPhoneFormatValid = true; // Mark as valid if regex passes here
+
+            // 2. Check Uniqueness Flag (crucial, set by blur)
+             // We re-check the flag here in case the user submitted before the blur check finished
+             // or if they ignored the error message.
+             if (!isPhoneUnique) {
+                 showFormFeedback('رقم الهاتف المدخل مسجل مسبقًا. يرجى استخدام رقم آخر.', 'warning');
+                 showPhoneFeedback('هذا الرقم مسجل بالفعل.', 'error'); // Ensure feedback near phone is also error
+                 phoneInput.focus();
+                 return;
+             }
+
+            // 3. Check general HTML5 form validity (for required fields, etc.)
+            let firstInvalidField = null;
+            let allValid = true;
+            // Manually check required fields as 'novalidate' is on
+            registrationForm.querySelectorAll('[required]').forEach(field => {
+                if (!field.value || (field.type === 'checkbox' && !field.checked) || (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`))) {
+                     allValid = false;
+                     if (!firstInvalidField) firstInvalidField = field;
+                     // Optionally add a visual cue to invalid fields
+                     field.classList.add('is-invalid'); // Needs corresponding CSS
+                 } else {
+                    field.classList.remove('is-invalid');
+                 }
+            });
+
+            // Also check phone format validity again (belt and suspenders)
+             if (!isPhoneFormatValid) {
+                 allValid = false;
+                 if (!firstInvalidField) firstInvalidField = phoneInput;
+                 phoneInput.classList.add('is-invalid');
+             } else {
+                 phoneInput.classList.remove('is-invalid');
+             }
+
+
+             if (!allValid) {
+                  showFormFeedback('الرجاء ملء جميع الحقول المطلوبة (*) بشكل صحيح.', 'warning');
+                  firstInvalidField?.focus();
+                  // Remove 'is-invalid' class after a delay or on input
+                  setTimeout(() => {
+                     registrationForm.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+                  }, 3000);
+                  return;
+             }
+
+
+            // --- Proceed with submission ---
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التسجيل...';
+
+            const formData = new FormData(registrationForm);
+            const donorData = {
+                full_name: formData.get('fullname'),
+                blood_type: formData.get('bloodtype'),
+                phone_number: phoneNumber, // Use validated 9-digit number
+                governorate: formData.get('governorate'),
+                city: formData.get('city') || null,
+                 // Determine last_donation_date based on radio selection
+                last_donation_date: formData.get('has_donated_recently') === 'yes' ? (formData.get('last_donation') || null) : null,
+                is_ready_to_donate: formData.get('ready_to_donate') === 'yes',
+                 // is_active defaults to true in the database
+            };
+
+            console.log('Register Page: Data to be inserted:', donorData);
+
+            if (!supabaseClient) {
+                showFormFeedback("خطأ: تعذر الاتصال بقاعدة البيانات.", 'danger');
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('donors')
+                    .insert([donorData])
+                    .select();
+
+                if (error) {
+                    console.error('Register Page: Error inserting data:', error);
+                    let errorMessage = 'حدث خطأ أثناء عملية التسجيل.';
+                    if (error.message.includes('duplicate key value violates unique constraint') && error.message.includes('phone_number')) {
+                         errorMessage = 'خطأ: رقم الهاتف هذا مسجل بالفعل في قاعدة البيانات.';
+                         isPhoneUnique = false; // Update flag based on DB response
+                         showPhoneFeedback(errorMessage, 'error');
+                         phoneInput.focus();
+                    } else if (error.code === '42501') {
+                        errorMessage = 'خطأ في الأذونات. لا يمكن إتمام التسجيل حالياً.';
+                    } else {
+                        errorMessage = `فشل التسجيل. (${error.message})`;
+                    }
+                    showFormFeedback(errorMessage, 'danger');
+                } else {
+                    console.log('Register Page: Data inserted successfully:', data);
+                    showFormFeedback('<strong>تم التسجيل بنجاح!</strong> شكراً لانضمامك لشبكة أبطال قطرة حياة.', 'success');
+                    registrationForm.reset();
+                    clearPhoneFeedback();
+                    lastDonationGroup?.classList.add('hidden-field');
+                    isPhoneFormatValid = false; // Reset flags
+                    isPhoneUnique = true;
+                    // Ensure button is enabled after successful reset
+                    if (submitButton) submitButton.disabled = false;
+                }
+            } catch (catchError) {
+                console.error('Register Page: Unexpected error:', catchError);
+                showFormFeedback(`حدث خطأ غير متوقع في التطبيق. (${catchError.message})`, 'danger');
+            } finally {
+                 // Re-enable button unless a definitive error occurred
+                 if (submitButton && !(isPhoneFormatValid && isPhoneUnique) && !formFeedback.querySelector('.alert-success')) {
+                    // Keep disabled if format/uniqueness failed and no success message shown
+                    submitButton.disabled = true;
+                 } else if (submitButton){
+                    submitButton.disabled = false; // Generally enable otherwise
+                 }
+                 // Only restore text if not showing success message (which clears the form)
+                 if (submitButton && !formFeedback.querySelector('.alert-success')){
+                     submitButton.innerHTML = originalButtonText;
+                 }
+            }
+        });
+
+    </script>
+
+    <!-- Shared JavaScript for nav toggle and year -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
